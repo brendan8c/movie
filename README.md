@@ -8,4 +8,4 @@
 - Скопировать из браузерной стройки ID фильма или сериала
 - Перейти на сайт и вставить этот ID в поле для поиска.
 
-<img src=https://raw.githubusercontent.com/Brendan8c/movie/master/img/example.webp width="50%">
+<img src=https://raw.githubusercontent.com/Brendan8c/movie/master/img/example.webp width="80%">
