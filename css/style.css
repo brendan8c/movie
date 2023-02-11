@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'AlumniSans-Medium';
+  font-display: swap;
+  font-weight: 500;
+  src: url('../fonts/AlumniSans-Medium.woff2') format('woff2'), url('../fonts/AlumniSans-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'AlumniSans-Regular';
+  font-display: swap;
+  font-weight: 400;
+  src: url('../fonts/AlumniSans-Regular.woff2') format('woff2'), url('../fonts/AlumniSans-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'AlumniSans-Light';
+  font-display: swap;
+  font-weight: 300;
+  src: url('../fonts/AlumniSans-Light.woff2') format('woff2'), url('../fonts/AlumniSans-Light.ttf') format('truetype');
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #000000;
+  font-family: 'AlumniSans-Medium', sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.form {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 560px;
+}
+.player-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.player-box::after {
+  content: '';
+  position: absolute;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3ClinearGradient id='Gradient' x1='0' x2='0' y1='0' y2='1'%3E%3Canimate attributeName='x1' values='0;0;1;1;0' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='y1' values='1;0;0;1;1' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='x2' values='1;1;0;0;1' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='y2' values='0;1;1;0;0' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Cstop offset='0%25' stop-color='%23ff0040'/%3E%3Cstop offset='100%25' stop-color='%2300eeff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' rx='12' fill='url(%23Gradient)'/%3E%3C/svg%3E");
+  background-size: 100%;
+  filter: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E#blur');
+  border-radius: 12px;
+  top: -2px;
+  left: -2px;
+  width: 100%;
+  height: 99%;
+  border: 1px solid #fff;
+  z-index: -1;
+}
+.form-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: 100%;
+  width: 100%;
+}
+.form-box::after {
+  content: '';
+  position: absolute;
+  background: -o-linear-gradient(320deg, #ff18187b, #227177f2 50%);
+  background: linear-gradient(130deg, #ff18187b, #227177f2 50%);
+  background-size: 100%;
+  filter: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E#blur');
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 0px 65px -5px #00292c, 0px 0px 100px 0px #280000;
+  box-shadow: 0px 0px 65px -5px #00292c, 0px 0px 100px 0px #280000;
+  width: 390px;
+  height: 100%;
+  border: 1px solid #fff;
+  z-index: -1;
+  transform: translate(-50%);
+  left: 50%;
+}
+input {
+  display: flex;
+  flex-wrap: wrap;
+  color: #707070;
+  background-color: #162024eb;
+  border: 2px solid #00000038;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  font-family: 'AlumniSans-Regular', sans-serif;
+  font-size: 40px;
+}
+#search {
+  border-left: 0px;
+  border-radius: 0 12px 12px 0;
+  cursor: pointer;
+}
+#search-title {
+  border-right: 0px;
+  border-radius: 12px 0 0 12px;
+  width: 270px;
+}
+#player {
+  width: 800px;
+  height: 452px;
+  background-image: url(https://youowl.ru/kinopoisk/img/poster0.webp);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 12px;
+  border: 3px solid #000000;
+}
+#player::selection {
+  background: transparent;
+}
+.css-canvas {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}

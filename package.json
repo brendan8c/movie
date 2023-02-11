@@ -1,0 +1,23 @@
+{
+  "name": "movie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "web": "web-dev-server --node-resolve --open --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brendan8c/movie.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brendan8c/movie/issues"
+  },
+  "homepage": "https://github.com/brendan8c/movie#readme",
+  "devDependencies": {
+    "@web/dev-server": "^0.1.35"
+  }
+}
