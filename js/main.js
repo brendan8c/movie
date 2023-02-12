@@ -78,7 +78,7 @@ async function sendRequest() {
 
 function createPlayerBazon() {
   playerForm.src = bazonLink + keyId;
-  playerForm.setAttribute('url', posterLink);
+  // playerForm.setAttribute('url', posterLink);
   log('Bazon id kinopoisk:', keyId);
 }
 function createPlayerVideocdn() {
