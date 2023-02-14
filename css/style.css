@@ -444,7 +444,7 @@ input {
 .information {
   position: relative;
   width: 800px;
-  height: 875px;
+  min-height: 0;
   background-color: #162024;
   border: 3px solid #000000;
   border-radius: 12px;
@@ -465,6 +465,7 @@ input {
   color: #a3a3a3;
   font-family: 'Nunito-ExtraLight', 'AlumniSans-light', sans-serif;
   font-size: 17px;
+  letter-spacing: 1px;
 }
 .information-link {
   position: relative;

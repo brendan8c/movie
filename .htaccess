@@ -1,0 +1,331 @@
+# https://codex.so/htaccess
+# Все URL адреса нужно писать через тире -
+# https://developers.google.com/search/docs/advanced/guidelines/url-structure?hl=ru&visit_id=637810857877402631-563278094&rd=1
+#.htaccess — это дополнительный конфигурационный файл Apache, который позволяет настраивать работу веб-сервера для каждой отдельной директории, не влияя на глобальные настройки Apache.
+# Настройки .htaccess действуют на каталог, в котором он расположен, и на все дочерние каталоги.
+
+# Включаем механизм преобразования
+RewriteEngine On
+
+# Индексный файл
+DirectoryIndex index.html
+
+# Теперь любой запрос, который оканчивается на «index.html», будет переадресован на URL без него.
+# В index.html ссылки должны быть прописаны данным образом <a href="/myjobs">My Works</a>
+# Правило RewriteRule применяется только в том случае:
+
+# Если запрос не является файлом (!-f)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# Если запрос не является директорией (!-d)
+# RewriteCond %{REQUEST_FILENAME} !-d
+
+# Регулярные выражения
+# ^ – Символ, с которого начинается строка
+# . – Один любой символ, кроме новой строки.
+# * – Пустая строка или несколько одинаковых символов
+# $ – Символ, которым заканчивается строка
+# ( ) – Находит и запоминает соответствие группы символов.
+# [ ] – Один из возможных символов.
+# Флаги
+# [F] – Возвращает ошибку 403 Forbidden (запрещено).
+# [L] – Остановить процесс преобразования на этом месте и не применять больше никаких правил преобразований.
+# [QSA] – Указывает на добавление строки запроса из URL к существующей, в строке подстановки.
+# [PT] – Останавливает процесс преобразования и передает полученную новую ссылку дальше по цепочке.
+# [R] – Останавливает процесс преобразования и возвращает результат браузеру клиента как редирект на новую страницу.
+# [S] – Пропускает следующее правило, если текущее правило сработало. Можно указать количество последующих игнорируемых правил [S=2].
+# [NC] – Регистронезависимая проверка.
+
+# В целом, эти 2 нижние директивы используются для улучшения SEO и удобства пользования сайтом путем удаления расширений файлов из URL.
+# Это условие проверяет, заканчивается ли запрошенный URI на ".html". %{THE_REQUEST} - это переменная сервера, которая содержит полную строку HTTP-запроса, отправленную браузером, включая метод, URL и протокол. Шаблон регулярного выражения "([^.]+).html" соответствует любым символам перед расширением .html и фиксирует их в обратной ссылке (%1).
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+# Это правило соответствует любому запросу, который начинается со слэша ("^"), и заменяет его на захваченную обратную ссылку (%1), эффективно удаляя расширение .html из URL. Флаг [NC] делает шаблон нечувствительным к регистру, [L] указывает, что больше никаких правил не должно обрабатываться, если это правило совпадает, а [R] выполняет внешнее перенаправление, отправляя клиенту код состояния HTTP 302.
+RewriteRule ^ /%1 [NC,L,R]
+# Если запрос является файлом с окончанием (.html)
+# В целом, эти 2 нижние директивы используются для разрешения запросов на файлы .html без расширения, что повышает удобство использования и безопасность веб-сайта.
+# Это условие проверяет, существует ли запрашиваемый файл с расширением .html. %{REQUEST_FILENAME} - это переменная сервера, которая содержит полный путь к локальному файлу, соответствующий запрошенному URI.
+RewriteCond %{REQUEST_FILENAME}.html -f
+# Это правило соответствует любому запросу, который начинается со слэша ("^") и добавляет расширение .html к запрашиваемому URI. Флаг [NC] делает шаблон нечувствительным к регистру, а [L] указывает, что при совпадении этого правила не следует обрабатывать больше никаких правил.
+RewriteRule ^ %{REQUEST_URI}.html [NC,L]
+
+# Обработка ошибок
+# - ситуация, когда посетитель обращается к несуществующей странице;
+ErrorDocument 404 https://owlov.ru/error/404.html
+# - в случае, когда доступ к странице ограничен;
+ErrorDocument 403 https://owlov.ru/error/403.html
+# - в запросе посетителя обнаружена синтаксическая ошибка;
+ErrorDocument 400 https://owlov.ru/error/400.html
+# - любая внутренняя ошибка сервера, которая не входит в рамки остальных ошибок класса.
+ErrorDocument 500 https://owlov.ru/error/500.html
+
+# Управляем кодировкой, все документы необходимо отдавать в кодировке UTF-8.
+AddType "text/html; charset=utf-8" .html .htm
+
+# Эта строка кода указывает на начало блока конфигурации веб-сервера Apache для модуля "mod_rewrite". Этот модуль предоставляет мощный способ манипулирования URL-адресами для управления тем, как запросы обрабатываются сервером. Эта строка проверяет, установлен ли модуль "mod_rewrite" и включен ли он, и если да, то обрабатываются строки блока.
+<IfModule mod_rewrite.c>
+# - Включаем проверку HTTP_REFERER
+# Эти 2 строки ниже выполняют переписывание URL на основе HTTP referrer. Первая строка проверяет, не пуст ли HTTP referrer, а вторая - не соответствует ли HTTP referrer шаблону разрешенного домена. Если оба условия верны, то запрашиваемый URL не из разрешенного домена, и сервер отвечает ошибкой или перенаправлением, как указано в следующем RewriteRule.
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://(.+\.)?owlov.\.ru/ [NC]
+# - Меняем запрошенный файл на картинку с логотипом Вашего проекта:
+# Этот код "2 строки ниже" проверяет, не содержит ли запрашиваемый URI "no-img.jpg". Если да, то следующая строка перенаправляет любой запрос на файлы изображений (jpg, jpeg, gif, bmp и png) на указанный URL файла изображения (https://owlov.ru/media/no-img.jpg). Используется вместо отсутствующих изображений.
+RewriteCond %{REQUEST_URI} !no-img.webp$ [NC]
+RewriteRule .(jpg|jpeg|gif|bmp|png)$ https://owlov.ru/media/no-img.webp [L]
+</IfModule>
+
+# - Другая напасть - отображение информации с Вашей площадки на другом сайте посредством тега <iframe>. 
+# - С его помощью можно воровать даже видео, поэтому такую возможность обязательно следует заблокировать:
+# Небольшое предупреждение для любых сайтов Wordpress... было сообщено, что следующая строка может привести к тому, что предварительный просмотр сайта настройщика тем станет пустым / не будет работать. Header always append X-Frame-Options SAMEORIGIN
+<IfModule mod_headers.c>
+# - Защита от XSS-атак
+	Header set X-XSS-Protection "1; mode=block"
+# - Защита от фреймов страниц и кликджекинга
+	Header always append X-Frame-Options SAMEORIGIN
+# - Защита от перехвата контента
+	Header set X-Content-Type-Options nosniff
+</IfModule>
+
+# Оптимизируем работу сайта. 
+# Информация будет сохраняться в браузере посетителя, что снизит количество запросов, идущих к базе данных проекта.
+<ifModule mod_headers.c>
+# - Перечисляем расширения файлов, которые хотели бы закэшироовать
+<FilesMatch ".(gif|jpg|jpeg|png|ico|svg|swf|flv|pdf|doc|docx|odf)$">
+# - Устанавливаем время хранения кэша полгода (в секундах)
+Header set Cache-Control "max-age=172800, private"
+</FilesMatch>
+</IfModule>
+# - Кэшировать таблицы стилей и JavaScript следует на менее продолжительное время:
+<ifModule mod_headers.c>
+<FilesMatch ".(js|css)$">
+# - Время жизни кэша составляет 1 день (также в секундах)
+Header set Cache-Control "max-age=86400, private"
+</FilesMatch>
+</IfModule>
+# - Динамические скрипты лучше вообще исключить из кэша во избежание ошибок при обновлении страниц:
+<ifModule mod_headers.c>
+<FilesMatch ".(php|cgi|scgi|fcgi)$">
+Header unset Cache-Control
+</FilesMatch>
+</IfModule>
+
+# Директива short_open_tag разрешает использование короткого синтаксиса для оформления PHP-кода
+php_value short_open_tag 1
+# upload_max_filesize определяет максимальный размер загружаемого файла.
+php_value upload_max_filesize 25M
+# post_max_size устанавливает максимально допустимый размер данных, отправляемых методом POST. 
+php_value post_max_size 25M
+
+# Запрет доступа для конкретного IP-адреса;
+# где 192.168.1.1. - IP-адрес, которому запрещается доступ(в конце обязательно должна быть точка).
+# Order Allow,Deny
+# Allow from all
+# Deny from 192.168.1.1.
+
+# Запрет доступа к сайту всем, кроме конкретного IP-адреса;
+# где 192.168.1.1 - IP-адрес, которому доступ будет открыт. 
+# Order Deny,Allow
+# Deny from all
+# Allow from 192.168.1.1.
+
+# Запрет любым хостам доступ к файлам с расширениями .txt и .dat (например, в них могут храниться внутренние данные скриптов).
+# <FilesMatch "\.(txt|dat)$">
+# Order Deny,Allow
+# Deny from all
+
+# Принудительно использовать HTTPS за прокси
+# Полезно, если у вас есть прокси-сервер перед вашим сервером, выполняющий завершение TLS.
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+# Чтобы повысить безопасность вашего сайта (и ваших пользователей), вы должны отключить
+# метод TRACE на своем веб-сервере. Этот метод не используется в реальной жизни и может быть использован для атак XST (межсайтовая трассировка).
+RewriteCond %{REQUEST_METHOD} ^TRACE 
+RewriteRule .* - [F]
+
+# Принудительная косая черта
+# RewriteCond %{REQUEST_URI} /+[^\.]+$
+# RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
+
+# Этот файл .htaccess используется для ускорения работы этого сайта.
+#
+# See https://github.com/sergeychernyshev/.htaccess
+# ----------------------------------------------------------------------
+# Правильный тип MIME для всех файлов
+#
+# Скопировано из файла .htaccess шаблонного проекта HTML5.
+# https://github.com/h5bp/html5-boilerplate/blob/master/.htaccess
+# ----------------------------------------------------------------------
+
+# JavaScript
+#   Нормализовать к стандартному типу (it's sniffed in IE anyways)
+#   tools.ietf.org/html/rfc4329#section-7.2
+AddType	application/javascript			js jsonp
+AddType	application/json			json
+
+# Audio
+AddType	audio/ogg				oga ogg
+AddType	audio/mp4				m4a f4a f4b
+
+# Video
+AddType	video/ogg				ogv
+AddType	video/mp4				mp4 m4v f4v f4p
+AddType	video/webm				webm
+AddType	video/x-flv				flv
+
+# SVG
+#   Требуется для веб-шрифтов svg на iPad
+#   twitter.com/FontSquirrel/status/14855840545
+AddType		image/svg+xml			svg svgz
+AddEncoding	gzip				svgz
+
+# Web fonts
+AddType application/vnd.ms-fontobject		eot
+AddType application/x-font-ttf			ttf ttc
+AddType font/opentype				otf
+AddType application/x-font-woff			woff
+
+# Ассорти из видов
+AddType	image/x-icon				ico
+AddType	image/webp				webp
+AddType	text/cache-manifest			appcache manifest
+AddType	text/x-component			htc
+AddType	application/xml				rss atom xml rdf
+AddType	application/x-chrome-extension		crx
+AddType	application/x-opera-extension		oex
+AddType	application/x-xpinstall			xpi
+AddType	application/octet-stream		safariextz
+AddType	application/x-web-app-manifest+json	webapp
+AddType	text/x-vcard				vcf
+AddType	application/x-shockwave-flash		swf
+AddType	text/vtt				vtt
+
+# --------------------------------------------------------------------------------------
+# Сжатие: http://code.google.com/speed/page-speed/docs/payload.html#GzipCompression
+# --------------------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE application/atom+xml
+	AddOutputFilterByType DEFLATE application/json
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/x-component
+	AddOutputFilterByType DEFLATE text/xml
+	
+	# Следующие типы MIME находятся в процессе регистрации
+	AddOutputFilterByType DEFLATE application/xslt+xml
+	AddOutputFilterByType DEFLATE image/svg+xml
+	
+	# Следующие типы MIME НЕ зарегистрированы
+	AddOutputFilterByType DEFLATE application/mathml+xml
+	AddOutputFilterByType DEFLATE application/rss+xml
+	
+	# JavaScript имеет различные типы MIME
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+	AddOutputFilterByType DEFLATE text/ecmascript
+	AddOutputFilterByType DEFLATE text/javascript
+
+	# Файлы .ico и другие сжимаемые изображения
+	AddOutputFilterByType DEFLATE image/vnd.microsoft.icon
+	AddOutputFilterByType DEFLATE image/x-icon
+	AddOutputFilterByType DEFLATE image/bmp
+	AddOutputFilterByType DEFLATE image/tiff
+	AddOutputFilterByType DEFLATE application/pdf
+
+	# сжимаемые шрифты (.woff уже сжат)
+	AddOutputFilterByType DEFLATE font/opentype
+	AddOutputFilterByType DEFLATE application/x-font-ttf
+	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+</IfModule>
+
+# ----------------------------------------------------------------------
+# Включение перезаписи имени файла (file.XXX.ext), если включена перезапись URL
+# В противном случае URL-адреса будут использовать строки запроса (file.ext? V = XXX)
+#
+# Другие прокси-серверы кэшируют активы, если нет строки запроса
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+	# Настройка переменной среды, чтобы ваш код мог определять, являются ли правила mod_rewrite исполняемыми
+	# в этой папке, и вы можете использовать file.123.jpg или вам нужно вернуться к file.jpg? 123
+	RewriteRule .					-	[E=URLVERSIONREWRITE:YES]
+
+	# Перезаписывает версию в файле.123.jpg, а также версию с отметкой времени в файле.123_m_12345123512354.jpg
+	# в исходный file.jpg, чтобы вы могли использовать его вместо file.jpg? 123, который не кешируется в некоторых прокси.
+	RewriteCond %{REQUEST_FILENAME}			!-f
+	RewriteRule ^(.*)\.(\d+)(_m_\d+)?\.([^\.]+)$	$1.$4	[L,QSA]
+
+	# Перезаписывает версию в file.ac123fe.jpg в исходный file.jpg
+	# поэтому вы можете использовать его вместо file.jpg? 123, который не кешируется в некоторых прокси.
+	# Используется для URL-адресов на основе хешей, для которых не требуется временная метка.
+	RewriteCond %{REQUEST_FILENAME}			!-f
+	RewriteRule ^(.*)\.([a-z\d]+)\.([^\.]+)$	$1.$3	[L,QSA]
+</IfModule>
+
+# -------------------------------------------------------------------------------------------------
+# Browser Caching: http://code.google.com/speed/page-speed/docs/caching.html#LeverageBrowserCaching
+#
+# Google рекомендует указывать для всех кэшируемых ресурсов следующее:
+#
+#    1. Срок действия истекает или максимальный возраст Cache-Control
+#
+# 	Установите срок действия не менее одного месяца, а желательно до одного года в будущем.
+# 	(Мы предпочитаем Expires, а не Cache-Control: max-age, потому что он поддерживается более широко.)
+# 	Не устанавливайте более одного года в будущем, так как это нарушает правила RFC.
+#
+#    2. Last-Modified or ETag
+#
+# 	Установите дату последнего изменения на время последнего изменения ресурса. 
+#	Если дата последнего изменения находится достаточно далеко в прошлом, скорее всего, браузер не получит ее повторно.
+#
+# Согласно Google: "указывать как Expires, так и Cache-Control: max-age излишне, или указывать
+# как Last-Modified, так и ETag ".
+# --------------------------------------------------------------------------------------------------
+<IfModule mod_expires.c>
+	ExpiresActive On
+
+	ExpiresByType application/json			"access plus 1 year"
+	ExpiresByType application/pdf			"access plus 1 year"
+	ExpiresByType application/x-shockwave-flash	"access plus 1 year"
+	ExpiresByType image/bmp 			"access plus 1 year"
+	ExpiresByType image/gif 			"access plus 1 year"
+	ExpiresByType image/jpeg 			"access plus 1 year"
+	ExpiresByType image/png 			"access plus 1 year"
+	ExpiresByType image/svg+xml 			"access plus 1 year"
+	ExpiresByType image/tiff 			"access plus 1 year"
+	ExpiresByType image/vnd.microsoft.icon 		"access plus 1 year"
+  ExpiresByType image/x-icon			"access plus 1 year"
+	ExpiresByType text/css 				"access plus 1 year"
+	ExpiresByType video/x-flv 			"access plus 1 year"
+	ExpiresByType application/vnd.bw-fontobject	"access plus 1 year"
+	ExpiresByType application/x-font-ttf		"access plus 1 year"
+	ExpiresByType application/font-woff		"access plus 1 year"
+	ExpiresByType font/opentype			"access plus 1 year"
+	ExpiresByType image/webp			"access plus 1 year"
+
+	# Следующие типы MIME находятся в процессе регистрации
+	ExpiresByType application/xslt+xml		"access plus 1 year"
+	ExpiresByType image/svg+xml			"access plus 1 year"
+
+	# Следующие типы MIME НЕ зарегистрированы
+	ExpiresByType application/mathml+xml		"access plus 1 year"
+	ExpiresByType application/rss+xml		"access plus 1 year"
+
+	# JavaScript имеет различные типы MIME
+	ExpiresByType application/x-javascript 		"access plus 1 year"
+	ExpiresByType application/javascript 		"access plus 1 year"
+	ExpiresByType text/ecmascript 			"access plus 1 year"
+	ExpiresByType text/javascript 			"access plus 1 year"
+</IfModule>
+
+# -------------------------------------------------------------------------
+# Отключение ETags, поскольку они, скорее всего, неправильно настроены и
+# не добавляйте функциональность, кроме Last-Modified
+# -------------------------------------------------------------------------
+<IfModule mod_headers.c>
+	# Попробуйте удалить заголовки etag (например, если они исходят от прокси)
+	Header unset ETag
+</IfModule>
+
+# Удалить ETags
+FileETag None
