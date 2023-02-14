@@ -41,6 +41,50 @@
     <meta name="twitter:site" content="@brendan8c" />
   </head>
   <body>
+    <!-- #1blue Прелоадер —————————————————— -->
+    <script>
+      const doc = document;
+      const log = console.log;
+
+      // #1pur Прелоадер для сайта
+      doc.body.onload = preloader;
+
+      function preloader() {
+        setTimeout(() => {
+          const preload = document.getElementById('page-preloader');
+          if (!preload.classList.contains('preloader__off')) {
+            preload.classList.add('preloader__off');
+          }
+        }, 1000);
+      }
+    </script>
+    <div id="page-preloader" class="preloader">
+      <div class="loader">
+        <svg class="loader-svg">
+          <g>
+            <path d="M 50,100 A 1,1 0 0 1 50,0" />
+          </g>
+          <defs>
+            <lineargradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color: #ff0000; stop-opacity: 1" />
+              <stop offset="100%" style="stop-color: #00eeff; stop-opacity: 1" />
+            </lineargradient>
+          </defs>
+        </svg>
+        <svg class="loader-svg-2">
+          <g>
+            <path d="M 50,100 A 1,1 0 0 1 50,0" />
+          </g>
+          <defs>
+            <lineargradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color: #00eeff; stop-opacity: 1" />
+              <stop offset="100%" style="stop-color: #ff0000; stop-opacity: 1" />
+            </lineargradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    <!-- #1blue ———————————————————————————— -->
     <div class="container">
       <canvas class="css-canvas"></canvas>
       <form class="form" action="#">
