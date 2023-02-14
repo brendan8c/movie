@@ -1,10 +1,11 @@
 'use strict'; // Строгий режим
 
 const log = console.log;
+import gl from './animation.js'; // Импортируем переменную gl из animation.js
 const inputSearch = document.getElementById('search-title'); // Получить поле ввода
 const playerBtn = document.getElementById('search'); // Кнопка поиска
 const playerForm = document.querySelector('#player'); // Форма плеера
-const posterLink = 'https://youowl.ru/kinopoisk/img/poster0.webp'; // Cсылка на постер
+const posterLink = 'https://owlov.ru/img/poster0.webp'; // Cсылка на постер
 let keyId; // Глобальная переменная для значения 'keyId' из localStorage
 const bazonLink = 'https://v1674220552.bazon.site/kp/'; // Cсылка для bazon.cc которая будет встроена в iframe
 const pvideocdnLink = 'https://13.annacdn.cc/agAMhXIKvZvI?kp_id='; // Cсылка для videocdn.tv которая будет встроена в iframe
@@ -77,11 +78,12 @@ async function sendRequest() {
 }
 
 function createPlayerBazon() {
+  console.clear();
   playerForm.src = bazonLink + keyId;
-  // playerForm.setAttribute('url', posterLink);
   log('Bazon id kinopoisk:', keyId);
 }
 function createPlayerVideocdn() {
+  console.clear();
   playerForm.src = pvideocdnLink + keyId + '&poster=' + posterLink;
   log('Videocdn id kinopoisk:', keyId);
 }

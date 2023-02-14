@@ -93,3 +93,4 @@ function main() {
 
   loop();
 }
+export default gl; // Оператор export default используется для экспорта переменной gl в качестве экспорта модуля по умолчанию.
