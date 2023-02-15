@@ -344,9 +344,9 @@ body {
 .information::after {
   content: '';
   position: absolute;
+  filter: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E#blur');
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3ClinearGradient id='Gradient' x1='0' x2='0' y1='0' y2='1'%3E%3Canimate attributeName='x1' values='0;0;1;1;0' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='y1' values='1;0;0;1;1' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='x2' values='1;1;0;0;1' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Canimate attributeName='y2' values='0;1;1;0;0' keyTimes='0;.25;.5;.75;1' dur='3s' repeatCount='indefinite' /%3E%3Cstop offset='0%25' stop-color='%23ff0040'/%3E%3Cstop offset='100%25' stop-color='%2300eeff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' rx='12' fill='url(%23Gradient)'/%3E%3C/svg%3E");
   background-size: 100%;
-  filter: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E#blur');
   border-radius: 12px;
   top: -2px;
   left: -2px;
