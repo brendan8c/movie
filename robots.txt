@@ -1,0 +1,6 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://owlov.ru/sitemap.xml
+
+Disallow: /info
