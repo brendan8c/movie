@@ -6,6 +6,6 @@
 
 - Всё что тебе нужно это [зайти на сайт kinopoisk](https://www.kinopoisk.ru/)
 - Скопировать из браузерной строки ID фильма или сериала
-- Перейти на сайт и вставить этот ID в поле для поиска.
+- Перейти на [сайт](https://www.owlov.ru/) и вставить этот ID в поле для поиска.
 
 <img src=https://raw.githubusercontent.com/Brendan8c/movie/master/img/example.webp width="80%">
