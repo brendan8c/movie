@@ -2,6 +2,8 @@
 
 const log = console.log;
 import gl from './animation.js'; // Импортируем переменную gl из animation.js
+import yandexCode from './yandex.js'; // Скрипт Яндекс Метрики в формате Base64
+import base64Decode from './base64Decode.js'; // Декодер Base64
 const inputSearch = document.getElementById('search-title'); // Получить поле ввода
 const playerBtn = document.getElementById('search'); // Кнопка поиска
 const playerForm = document.querySelector('#player'); // Форма плеера
@@ -32,6 +34,16 @@ playerBtn.addEventListener('click', () => {
   return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
 });
 // 4365427  1166515
+
+// Через 5 секунд после загрузки HTML декодируем base64 и встраиваем в HTML
+window.onload = function () {
+  setTimeout(() => {
+    const yandexScript = document.createElement('script');
+    const decodedCode = base64Decode(yandexCode.encodedCode);
+    yandexScript.innerHTML = decodedCode;
+    document.getElementsByTagName('head')[0].appendChild(yandexScript);
+  }, 5000);
+};
 
 // Отправляю GET запрос на сервер.
 async function sendRequest() {

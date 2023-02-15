@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Ключевые слова. -->
     <meta name="keywords" content="фильмы, сериалы, кино, movie, movies, series" />
+    <meta name="description" content="Find and watch movies online for free." />
     <!-- Сообщаем браузеру, как обрабатывать страницу на мобильном устройстве. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
     <meta name="theme-color" content="#ffffff" />
@@ -15,8 +15,8 @@
     <link rel="mask-icon" href="img/favicon.svg" color="#000000" />
     <link rel="apple-touch-icon" href="img/favicon.png" />
     <link rel="manifest" href="/js/manifest.json" />
+    <meta name="author" content="Brendan8c" />
     <title>Owlov</title>
-    <!-- <script src="js/yandex-metrika.js"></script> -->
     <!-- Протокол Open Graph позволяет любой веб-странице стать многофункциональным объектом в социальном графе. https://ogp.me -->
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
@@ -39,6 +39,7 @@
     <meta property="og:image:height" content="502" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@brendan8c" />
+    <!-- Yandex.Metrika script -->
     <script src="js/yandex-metrika.js"></script>
   </head>
   <noscript>
@@ -47,52 +48,9 @@
     </div>
   </noscript>
   <body>
-    <!-- #1blue Прелоадер —————————————————— -->
-    <!-- <script>
-      const doc = document;
-
-      // #1pur Прелоадер для сайта
-      doc.body.onload = preloader;
-
-      function preloader() {
-        setTimeout(() => {
-          const preload = document.getElementById('page-preloader');
-          if (!preload.classList.contains('preloader__off')) {
-            preload.classList.add('preloader__off');
-          }
-        }, 1000);
-      }
-    </script>
-    <div id="page-preloader" class="preloader">
-      <div class="loader">
-        <svg class="loader-svg">
-          <g>
-            <path d="M 50,100 A 1,1 0 0 1 50,0" />
-          </g>
-          <defs>
-            <lineargradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color: #ff0000; stop-opacity: 1" />
-              <stop offset="100%" style="stop-color: #00eeff; stop-opacity: 1" />
-            </lineargradient>
-          </defs>
-        </svg>
-        <svg class="loader-svg-2">
-          <g>
-            <path d="M 50,100 A 1,1 0 0 1 50,0" />
-          </g>
-          <defs>
-            <lineargradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color: #00eeff; stop-opacity: 1" />
-              <stop offset="100%" style="stop-color: #ff0000; stop-opacity: 1" />
-            </lineargradient>
-          </defs>
-        </svg>
-      </div>
-    </div> -->
-    <!-- #1blue ———————————————————————————— -->
     <div class="container">
       <canvas class="css-canvas"></canvas>
-      <form class="form" action="#">
+      <form class="form" action="#" method="GET">
         <div class="form-box">
           <div class="input-box">
             <input id="search-title" class="class_input" type="text" placeholder="ID КиноПоиск" name="title" />

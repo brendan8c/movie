@@ -198,6 +198,7 @@ select {
   font-weight: 200;
   src: url('../fonts/Nunito-ExtraLight.woff2') format('woff2'), url('../fonts/Nunito-ExtraLight.ttf') format('truetype');
 }
+
 /* Прелоадер —————————————————— */
 .preloader__off {
   opacity: 0 !important;
