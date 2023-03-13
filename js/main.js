@@ -84,6 +84,6 @@ function createPlayerBazon() {
 }
 function createPlayerVideocdn() {
   console.clear();
-  playerForm.src = pvideocdnLink + keyId + '&poster=' + posterLink;
+  playerForm.src = pvideocdnLink + keyId + '&poster=' + posterLink + '?domain=owlov.ru';
   log('Videocdn id kinopoisk:', keyId);
 }
