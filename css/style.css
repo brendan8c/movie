@@ -524,3 +524,19 @@ input {
   top: 0;
   z-index: 0;
 }
+.seasonBtn {
+  font-family: 'AlumniSans-Medium';
+  position: absolute;
+  width: 70px;
+  height: 30px;
+  font-size: 25px;
+  border-radius: 6px;
+  background-color: #162024eb;
+  color: #707070;
+  outline: none;
+  border-top: 0;
+  border-right: 0;
+  border-left: 3px solid #45b1a7;
+  border-bottom: 3px solid #45b1a7;
+  cursor: pointer;
+}
