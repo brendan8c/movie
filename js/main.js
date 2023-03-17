@@ -69,7 +69,7 @@ async function sendRequest() {
     if (data.result === 'bazon') {
       return createPlayerBazon(); // Если фильм есть на bazon, выполняем функцию createPlayerBazon()
     } else if (typeof data.result === 'object') {
-      log('Response from server:', data);
+      // log('Response from server:', data);
       return createPlayerKodik(data.result); // Выполняем функцию createPlayerKodik() и передаем ей URL
     } else if (data.result === 'videocdn') {
       return createPlayerVideocdn(); // Если фильма нет на bazon, выполняем функцию createPlayerVideocdn()
@@ -93,6 +93,7 @@ function createPlayerKodik(data) {
   if (Object.keys(data).length === 1) {
     const seasonUrl = Object.values(data)[0];
     playerForm.src = seasonUrl;
+    log('Kodik id kinopoisk:', keyId);
   } else {
     const seasonLinks = Object.entries(data); // Преобразование объекта ссылок на сезоны в массив пар [ключ, значение]
     let leftPosition = 10; // Переменная для расчета позиции по горизонтали
@@ -109,6 +110,7 @@ function createPlayerKodik(data) {
       button.addEventListener('click', () => {
         // Добавление обработчика событий на кнопку
         playerForm.src = seasonUrl; // Установка ссылки на сезон
+        log('Kodik id kinopoisk:', keyId);
         const buttons = document.querySelectorAll('.seasonBtn'); // Поиск всех кнопок
         buttons.forEach(button => button.remove()); // Удаление всех кнопок
       });
