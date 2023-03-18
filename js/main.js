@@ -14,23 +14,48 @@ const pvideocdnLink = 'https://13.annacdn.cc/agAMhXIKvZvI?kp_id='; // Cсылк�
 // Слушаем нажатие клавиши Enter
 inputSearch.addEventListener('keydown', event => {
   if (event.code === 'Enter') {
-    localStorage.clear(); // Очищаем локальное хранилище localStorage
+    event.preventDefault(); // Отменить отправку данных формы
     const inputValue = inputSearch.value; // Получить значение input.value
-    localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
-    keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage
-    inputSearch.value = ''; // Очистить поле ввода input.value
-    return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+    // Проверяем, что значение поля ввода не пустое
+    if (inputValue) {
+      // Очищаем локальное хранилище localStorage.
+      // Перебираем все ключи в localStorage и проверяет каждый ключ на наличие подстроки 'keyId'. Если ключ содержит эту подстроку, он удаляется из localStorage.
+      for (let key in localStorage) {
+        if (key.includes('keyId')) {
+          localStorage.removeItem(key);
+        }
+      }
+      const buttons = document.querySelectorAll('.seasonBtn'); // Поиск всех кнопок
+      buttons.forEach(button => button.remove()); // Удаление всех кнопок
+      playerForm.src = ''; // Очищаем форму плеера
+      localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
+      keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage
+      inputSearch.value = ''; // Очистить поле ввода input.value
+      return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+    }
   }
 });
 
 // Слушаем нажатие на кнопку поиска
 playerBtn.addEventListener('click', () => {
-  localStorage.clear(); // Очищаем локальное хранилище localStorage
   const inputValue = inputSearch.value; // Получить значение input.value
-  localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
-  keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage, затем присваиваем к глобальной переменной keyId
-  inputSearch.value = ''; // Очищаем значение input.value
-  return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+  // Проверяем, что значение поля ввода не пустое
+  if (inputValue) {
+    // Очищаем локальное хранилище localStorage.
+    // Перебираем все ключи в localStorage и проверяет каждый ключ на наличие подстроки 'keyId'. Если ключ содержит эту подстроку, он удаляется из localStorage.
+    for (let key in localStorage) {
+      if (key.includes('keyId')) {
+        localStorage.removeItem(key);
+      }
+    }
+    const buttons = document.querySelectorAll('.seasonBtn'); // Поиск всех кнопок
+    buttons.forEach(button => button.remove()); // Удаление всех кнопок
+    playerForm.src = ''; // Очищаем форму плеера
+    localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
+    keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage, затем присваиваем к глобальной переменной keyId
+    inputSearch.value = ''; // Очищаем значение input.value
+    return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+  }
 });
 // 4365427  1166515  880618
 
@@ -100,6 +125,9 @@ function createPlayerKodik(data) {
     for (let i = 0; i < seasonLinks.length; i++) {
       const seasonNumber = seasonLinks[i][0]; // Номер сезона
       const seasonUrl = seasonLinks[i][1]; // Ссылка на сезон
+      if (seasonNumber === '0') {
+        continue; // Если ключ "0", пропустить итерацию цикла
+      }
       const button = document.createElement('button'); // Создание кнопки
       button.innerText = `Сезон ${seasonNumber}`; // Установка текста на кнопке
       button.classList.add('seasonBtn'); // Добавление класса на кнопку
