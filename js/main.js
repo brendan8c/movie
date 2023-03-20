@@ -11,6 +11,33 @@ const bazonLink = 'https://v1674220552.bazon.site/kp/'; // Cсылка для ba
 const pvideocdnLink = 'https://13.annacdn.cc/agAMhXIKvZvI?kp_id='; // Cсылка для videocdn.tv которая будет встроена в iframe
 // const kodikLinkd = 'https://kodik.cc/find-player?kinopoiskID=880618'; // Формируется при получении ответа от сервера в виде объекта
 
+// Устанавливаем фокус на поле ввода при загрузке страницы
+inputSearch.focus();
+// Слушаем нажатие клавиши Enter в andrid, в chrome браузере
+inputSearch.addEventListener('submit', event => {
+  if (event.key === 'Enter') {
+    event.preventDefault(); // Отменить отправку данных формы
+    const inputValue = inputSearch.value; // Получить значение input.value
+    // Проверяем, что значение поля ввода не пустое
+    if (inputValue) {
+      // Очищаем локальное хранилище localStorage.
+      // Перебираем все ключи в localStorage и проверяет каждый ключ на наличие подстроки 'keyId'. Если ключ содержит эту подстроку, он удаляется из localStorage.
+      for (let key in localStorage) {
+        if (key.includes('keyId')) {
+          localStorage.removeItem(key);
+        }
+      }
+      const buttons = document.querySelectorAll('.seasonBtn'); // Поиск всех кнопок
+      buttons.forEach(button => button.remove()); // Удаление всех кнопок
+      playerForm.src = ''; // Очищаем форму плеера
+      localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
+      keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage
+      inputSearch.value = ''; // Очистить поле ввода input.value
+      return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+    }
+  }
+});
+
 // Слушаем нажатие клавиши Enter
 inputSearch.addEventListener('keydown', event => {
   if (event.code === 'Enter') {
