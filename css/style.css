@@ -591,7 +591,7 @@ input {
   position: relative;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   font-family: 'AlumniSans-Medium';
   background-color: #162024eb;
@@ -618,6 +618,21 @@ input {
   z-index: -1;
   transform: translate(-50%);
   left: 50%;
+}
+.keyBtn {
+  font-family: 'AlumniSans-Medium';
+  background-color: #162024eb;
+  color: #707070;
+  font-size: 25px;
+  border-radius: 6px;
+  border: 2px solid #707070;
+  width: 40px;
+  height: 40px;
+  outline: none;
+  cursor: pointer;
+}
+.keyBtn + .keyBtn {
+  margin-left: 10px;
 }
 @media screen and (max-width: 510px) {
   .input-box {

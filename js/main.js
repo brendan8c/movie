@@ -64,6 +64,41 @@ inputSearch.addEventListener('keydown', event => {
 });
 
 // Слушаем нажатие на кнопку поиска
+// playerBtn.addEventListener('click', () => {
+//   const inputValue = inputSearch.value; // Получить значение input.value
+//   // Проверяем, что значение поля ввода не пустое
+//   if (inputValue) {
+//     let keys = JSON.parse(localStorage.getItem('KEYS_KeyId')) || []; // Получить существующие ключи из localStorage
+//     keys.unshift(inputValue); // Добавьте новое значение в начало массива
+//     keys = keys.slice(0, 3); // Сохраняем только последние 3 значения в массиве
+//     localStorage.setItem('KEYS_KeyId', JSON.stringify(keys)); // Сохраните обновленные ключи в localStorage
+//     keyIdList.innerHTML = ''; // Очистить список HTML
+//     // Добавляем новые элементы списка для каждого значения в массиве
+//     keys.forEach(key => {
+//       const li = document.createElement('li');
+//       li.innerText = key;
+//       keyIdList.appendChild(li);
+//     });
+//     inputSearch.value = ''; // Очистить входное значение
+//     keyId = keys[0]; // Получение первого ключа в массиве
+//     // Очищаем локальное хранилище localStorage.
+//     // Перебираем все ключи в localStorage и проверяет каждый ключ на наличие подстроки 'keyId'. Если ключ содержит эту подстроку, он удаляется из localStorage.
+//     for (let key in localStorage) {
+//       if (key.includes('keyId')) {
+//         localStorage.removeItem(key);
+//       }
+//     }
+//     const buttons = document.querySelectorAll('.seasonBtn'); // Поиск всех кнопок
+//     buttons.forEach(button => button.remove()); // Удаление всех кнопок
+//     playerForm.src = ''; // Очищаем форму плеера
+//     localStorage.setItem('keyId', inputValue); // Установить входное значение input.value как элемент в localStorage
+//     keyId = localStorage.getItem('keyId'); // Получить значение 'keyId' из localStorage, затем присваиваем к глобальной переменной keyId
+//     inputSearch.value = ''; // Очищаем значение input.value
+//     return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
+//   }
+// });
+// 4365427  1166515  880618
+
 playerBtn.addEventListener('click', () => {
   const inputValue = inputSearch.value; // Получить значение input.value
   // Проверяем, что значение поля ввода не пустое
@@ -84,7 +119,19 @@ playerBtn.addEventListener('click', () => {
     return sendRequest(keyId); // Вернуть значение 'keyId' в функцию 'sendRequest()'
   }
 });
+
 // 4365427  1166515  880618
+
+// Получаем сохраненные значения из localStorage при загрузке страницы и добавляем их в поле <ul id="keyIdList"></ul>
+// window.addEventListener('load', () => {
+//   const keys = JSON.parse(localStorage.getItem('KEYS_KeyId')) || [];
+//   // Добавляем элементы списка для каждого значения в массиве
+//   keys.forEach(key => {
+//     const li = document.createElement('li');
+//     li.innerText = key;
+//     keyIdList.appendChild(li);
+//   });
+// });
 
 // Отправляю GET запрос на сервер.
 async function sendRequest() {
